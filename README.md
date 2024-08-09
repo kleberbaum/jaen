@@ -1,42 +1,63 @@
-# Jaen
+# Jaen v3
 
-Jaen ist ein leistungsstarkes Content-Management-System (CMS) für moderne Webentwicklung mit Gatsby.
+Jaen is a powerful Content Management System (CMS) for modern web development with Gatsby, now in Version 3 with improved performance and user-friendliness.
 
-## Erste Schritte
+## Getting Started
 
-Um mit Jaen zu beginnen, folgen Sie diesen Schritten:
+To begin with Jaen v3, follow these steps:
 
-1. Erstellen Sie ein neues Gatsby-Projekt:
+1. Create a new Gatsby project:
    ```
    npx gatsby new my-jaen-project
    cd my-jaen-project
    ```
 
-2. Installieren Sie Jaen und seine Abhängigkeiten:
+2. Install Jaen v3:
    ```
-   npm install jaen @jaenjs/jaen @jaenjs/gatsby-plugin-jaen
+   jaen
    ```
 
-3. Fügen Sie das Jaen-Plugin zu Ihrer `gatsby-config.js` hinzu:
-   ```javascript
-   module.exports = {
+3. Add the Jaen plugin to your `gatsby-config.ts`:
+   ```typescript
+   import type {GatsbyConfig} from 'gatsby'
+
+   const config: GatsbyConfig = {
      plugins: [
-       '@jaenjs/gatsby-plugin-jaen',
-       // ... andere Plugins
+       {
+         resolve: `gatsby-plugin-jaen`,
+         options: {
+           // Jaen configuration here
+         }
+       },
+       // ... other plugins
      ],
+   }
+
+   export default config
+   ```
+
+4. Configure ZITADEL for authentication in your `gatsby-config.ts`:
+   ```typescript
+   options: {
+     zitadel: {
+       organizationId: 'YOUR_ORGANIZATION_ID',
+       clientId: 'YOUR_CLIENT_ID',
+       authority: 'https://accounts.zitadel.ch',
+       redirectUri: 'http://localhost:8000'
+     }
    }
    ```
 
-4. Starten Sie Ihren Entwicklungsserver:
+5. Start your development server:
    ```
    gatsby develop
    ```
 
-## Verwendung
+## Usage
 
-Hier sind einige Beispiele für die Verwendung von Jaen v3:
+Here are some examples of using Jaen v3:
 
-1. Erstellen einer bearbeitbaren Textkomponente:
+1. Creating an editable text component:
 
 ```jsx
 import {TextField} from '@jaenjs/jaen'
@@ -44,14 +65,14 @@ import {TextField} from '@jaenjs/jaen'
 const EditableHeadline = () => (
   <TextField
     name="headline"
-    defaultValue="Willkommen bei Jaen!"
+    defaultValue="Welcome to Jaen v3!"
   >
     {(value) => <h1>{value}</h1>}
   </TextField>
 )
 ```
 
-2. Implementieren eines bearbeitbaren Bildes:
+2. Implementing an editable image with optimized performance:
 
 ```jsx
 import {ImageField} from '@jaenjs/jaen'
@@ -59,7 +80,9 @@ import {ImageField} from '@jaenjs/jaen'
 const EditableImage = () => (
   <ImageField
     name="heroImage"
-    defaultValue={{src: '/default-image.jpg', alt: 'Standardbild'}}
+    defaultValue={{src: '/default-image.jpg', alt: 'Default Image'}}
+    withWebp
+    imgixParams={{auto: 'compress,format'}}
   >
     {(image) => (
       <img src={image.src} alt={image.alt} />
@@ -68,7 +91,7 @@ const EditableImage = () => (
 )
 ```
 
-3. Erstellen einer dynamischen Sektion:
+3. Creating a dynamic section with enhanced options:
 
 ```jsx
 import {SectionField} from '@jaenjs/jaen'
@@ -78,34 +101,38 @@ const DynamicSection = () => (
     name="contentSection"
     sections={[
       {name: 'TextBlock', component: TextBlock},
-      {name: 'ImageGallery', component: ImageGallery}
+      {name: 'ImageGallery', component: ImageGallery},
+      {name: 'VideoEmbed', component: VideoEmbed}
     ]}
+    max={5}
   />
 )
 ```
 
-## Authentifizierung mit ZITADEL
+## Authentication with ZITADEL
 
-Jaen verwendet ZITADEL als Authentifizierungsanbieter. ZITADEL bietet eine robuste und sichere Lösung für die Benutzerverwaltung und -authentifizierung in Ihren Jaen-Projekten.
+Jaen v3 uses ZITADEL as its authentication provider. ZITADEL offers a robust and secure solution for user management and authentication in your Jaen projects.
 
-Wichtige Merkmale:
-- Kostenlose Tier für Self-Hosting: ZITADEL bietet eine kostenlose Option für Self-Hosting, was Ihnen volle Kontrolle über Ihre Authentifizierungsinfrastruktur gibt.
-- Einfache Integration: Die Konfiguration von ZITADEL in Ihrem Jaen-Projekt ist unkompliziert und wird in der `gatsby-config.ts` Datei vorgenommen.
+Key features:
+- Free tier for self-hosting: ZITADEL provides a free option for self-hosting, giving you full control over your authentication infrastructure.
+- Easy integration: Configuring ZITADEL in your Jaen project is straightforward and done in the `gatsby-config.ts` file.
+- Advanced security features: ZITADEL offers multi-factor authentication, Single Sign-On (SSO), and detailed permission management.
+- GDPR compliant: ZITADEL meets the requirements of the General Data Protection Regulation.
 
-Für detaillierte Informationen zur Konfiguration von ZITADEL in Ihrem Jaen-Projekt, werfen Sie einen Blick in die `gatsby-config.ts` Datei im Beispielprojekt.
+For detailed information on configuring ZITADEL in your Jaen project, take a look at the `gatsby-config.ts` file in the example project or visit the [ZITADEL documentation](https://zitadel.com/docs/).
 
-## Beitragen
+## Contributing
 
-Wir freuen uns über Beiträge zur Verbesserung von Jaen! Wenn Sie mithelfen möchten, folgen Sie bitte diesen Schritten:
+We welcome contributions to improve Jaen! If you'd like to contribute, please follow these steps:
 
-1. Forken Sie das Repository
-2. Erstellen Sie einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
-3. Committen Sie Ihre Änderungen (`git commit -m 'Add some AmazingFeature'`)
-4. Pushen Sie den Branch (`git push origin feature/AmazingFeature`)
-5. Öffnen Sie einen Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Lizenz
+## License
 
-Dieses Projekt ist unter der EUPL-1.2 Lizenz lizenziert. Weitere Details finden Sie in der LICENSE-Datei.
+This project is licensed under the EUPL-1.2 License. See the LICENSE file for more details.
 
-Copyright © 2023 jaen.io
+Copyright © 2023 jaen.io. All rights reserved.
